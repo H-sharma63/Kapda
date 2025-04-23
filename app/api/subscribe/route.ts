@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-
+  
 async function sendConfirmationEmail(to: string) {
   await transporter.sendMail({
     from: process.env.EMAIL_USER,
