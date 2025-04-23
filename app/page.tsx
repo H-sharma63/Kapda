@@ -35,8 +35,8 @@ export default function Home() {
         <Image
           src="/logo.png" // Place your logo.svg file inside the public folder
           alt="Company Logo"
-          width={48}
-          height={48}
+          width={65}
+          height={65}
           className="mx-auto"
           priority={true}
         />
