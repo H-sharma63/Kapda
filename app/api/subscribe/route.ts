@@ -1,11 +1,15 @@
 // app/api/subscribe/route.ts
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import fs from "fs/promises";
+import path from "path";
+
+const subscribersFile = path.join(process.cwd(), "subscribers.json");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.mailersend.net",
-  port: 587,         // Use 587 for TLS (STARTTLS)
-  secure: false,     // false since STARTTLS uses upgrade from plain to encrypted
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -29,9 +33,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
-    // Here you would normally save the email to DB or file...
+    // Read existing subscribers
+    let subscribers: string[] = [];
+    try {
+      const data = await fs.readFile(subscribersFile, "utf-8");
+      subscribers = JSON.parse(data);
+    } catch (err) {
+      // File might not exist yet, ignore error
+    }
 
-    // Send confirmation email after storing subscriber
+    // Prevent duplicate subscriptions
+    if (subscribers.includes(email)) {
+      return NextResponse.json({ message: "Already subscribed" }, { status: 409 });
+    }
+
+    // Save new subscriber
+    subscribers.push(email);
+    await fs.writeFile(subscribersFile, JSON.stringify(subscribers, null, 2));
+
+    // Send confirmation email
     await sendConfirmationEmail(email);
 
     return NextResponse.json({ message: "Subscribed and email sent!" }, { status: 201 });
