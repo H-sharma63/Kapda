@@ -1,0 +1,13 @@
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure Tailwind CSS is properly installed and configured */
+
+/* @import url('https://fonts.googleapis.com/css2?family=Georgia:wght@400;700&display=swap'); */
+/* Base font & background */
+body {
+  background-color: #f8fafc; /* Replace with a valid background color */
+  font-family: 'Georgia', serif; /* Replace with a valid font family */
+}
