@@ -1,10 +1,8 @@
-// app/api/subscribe/route.ts
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
-import fs from "fs/promises";
-import path from "path";
 
-const subscribersFile = path.join(process.cwd(), "subscribers.json");
+// In-memory store (resets on every deployment)
+const tempSubscribers = new Set<string>();
 
 const transporter = nodemailer.createTransport({
   host: "smtp.mailersend.net",
@@ -15,14 +13,19 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-  
+
 async function sendConfirmationEmail(to: string) {
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to,
-    subject: "Thanks for subscribing!",
-    html: `<h1>Thank you for subscribing!</h1><p>We will notify you when we launch.</p>`,
-  });
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to,
+      subject: "Thanks for subscribing!",
+      html: `<h1>Thank you for subscribing!</h1><p>We will notify you when we launch.</p>`,
+    });
+  } catch (error) {
+    console.error("Failed to send confirmation email:", error);
+    throw error;
+  }
 }
 
 export async function POST(request: Request) {
@@ -33,23 +36,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid email" }, { status: 400 });
     }
 
-    // Read existing subscribers
-    let subscribers: string[] = [];
-    try {
-      const data = await fs.readFile(subscribersFile, "utf-8");
-      subscribers = JSON.parse(data);
-    } catch (err) {
-      // File might not exist yet, ignore error
-    }
-
-    // Prevent duplicate subscriptions
-    if (subscribers.includes(email)) {
+    // Check if the email is already in the in-memory store
+    if (tempSubscribers.has(email)) {
       return NextResponse.json({ message: "Already subscribed" }, { status: 409 });
     }
 
-    // Save new subscriber
-    subscribers.push(email);
-    await fs.writeFile(subscribersFile, JSON.stringify(subscribers, null, 2));
+    // Add email to in-memory store
+    tempSubscribers.add(email);
 
     // Send confirmation email
     await sendConfirmationEmail(email);
