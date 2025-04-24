@@ -41,13 +41,15 @@ This is the source code for the "Opening Soon" landing page of Kapda, allowing u
 ```bash
 git clone <https://github.com/H-sharma63/Kapda.gitl>
 cd <kapda>
-
+```
 2. Install dependencies:
+```
 npm install
 # or
 yarn install
-
+```
 3. Create a .env.local file in the root directory and add the following environment variables:
+```
 FIREBASE_API_KEY=your_firebase_api_key
 FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
 FIREBASE_PROJECT_ID=your_firebase_project_id
@@ -57,3 +59,4 @@ FIREBASE_APP_ID=your_firebase_app_id
 
 EMAIL_USER=your_smtp_username
 EMAIL_PASS=your_smtp_password
+```
