@@ -34,16 +34,16 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-start pt-24 px-6 bg-[#FCFBF6]">
       {/* Logo Section */}
-      <section className="mb-16">
+      <section className="mb-16 text-center">
         <Image
           src="/logo.png" // Place your logo.svg file inside the public folder
           alt="Company Logo"
           width={60}
           height={60}
-          className="mx-auto"
+          className="mx-auto -mt-16"
           priority={true}
         />
-        <h2 className="mt-2 text-[#B99B6B] font-serif text-2xl font-semibold tracking-wide">
+        <h2 className="mt-2 text-[#B99B6B] font-serif text-2xl font-semibold tracking-wide"text-center>
     Kapda
   </h2>
         <p className="mt-2 text-[#C8AD95] text-sm font-semibold tracking-widest uppercase">
