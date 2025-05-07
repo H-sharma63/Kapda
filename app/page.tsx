@@ -44,7 +44,7 @@ export default function Home() {
           priority={true}
         />
         <h2 className="mt-2 text-[#B99B6B] font-serif text-2xl font-semibold tracking-wide"text-center>
-    Kapda
+    Sakhi
   </h2>
         <p className="mt-2 text-[#C8AD95] text-sm font-semibold tracking-widest uppercase">
     Style Meets Sanskriti
