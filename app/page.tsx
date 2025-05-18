@@ -43,10 +43,10 @@ export default function Home() {
           className="mx-auto -mt-16"
           priority={true}
         />
-        <h2 className="mt-2 text-[#B99B6B] font-serif text-2xl font-semibold tracking-wide"text-center>
+        <h2 className="mt-2 text-[#2B0010] font-serif text-2xl font-semibold tracking-wide"text-center>
     Sakhi
   </h2>
-        <p className="mt-2 text-[#C8AD95] text-sm font-semibold tracking-widest uppercase">
+        <p className="mt-2 text-[#2B0010] text-sm font-semibold tracking-widest uppercase">
     Style Meets Sanskriti
   </p>
       </section>
