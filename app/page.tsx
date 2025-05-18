@@ -36,7 +36,7 @@ export default function Home() {
       {/* Logo Section */}
       <section className="mb-16 text-center">
         <Image
-          src="/logo.png" // Place your logo.svg file inside the public folder
+          src="/logo.svg" // Place your logo.svg file inside the public folder
           alt="Company Logo"
           width={60}
           height={60}
